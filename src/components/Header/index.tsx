@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useRouter } from 'next/router'
 import LoginButton from './LoginButton'
 import SignUpButton from './SigUpButton'
+import NextLink from 'next/link'
 
 const NAV_BAR = [
   {
@@ -98,19 +99,21 @@ export default function Header() {
                         width: '100%',
                       }}
                     >
-                      <Button
-                        color={
-                          router.pathname === item.path
-                            ? 'primary'
-                            : 'secondary'
-                        }
-                        sx={{
-                          fontWeight: 'bold',
-                          width: '100%',
-                        }}
-                      >
-                        {item.title}
-                      </Button>
+                      <NextLink passHref href={item.path}>
+                        <Button
+                          color={
+                            router.pathname === item.path
+                              ? 'primary'
+                              : 'secondary'
+                          }
+                          sx={{
+                            fontWeight: 'bold',
+                            width: '100%',
+                          }}
+                        >
+                          {item.title}
+                        </Button>
+                      </NextLink>
                     </Grid>
                   )
                 })}
@@ -133,19 +136,21 @@ export default function Header() {
             {NAV_BAR.map((item, index) => {
               return (
                 <Grid item key={index}>
-                  <Button
-                    color={
-                      router.pathname === item.path ? 'primary' : 'secondary'
-                    }
-                    sx={{
-                      fontWeight: 'bold',
-                      borderBottom:
-                        router.pathname === item.path ? '1px solid' : '',
-                      borderRadius: 0,
-                    }}
-                  >
-                    {item.title}
-                  </Button>
+                  <NextLink passHref href={item.path}>
+                    <Button
+                      color={
+                        router.pathname === item.path ? 'primary' : 'secondary'
+                      }
+                      sx={{
+                        fontWeight: 'bold',
+                        borderBottom:
+                          router.pathname === item.path ? '1px solid' : '',
+                        borderRadius: 0,
+                      }}
+                    >
+                      {item.title}
+                    </Button>
+                  </NextLink>
                 </Grid>
               )
             })}
