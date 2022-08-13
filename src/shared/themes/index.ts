@@ -1,5 +1,5 @@
-import { createTheme } from '@material-ui/core'
-import { blueGrey, grey, indigo, red } from '@material-ui/core/colors'
+import { createTheme } from '@mui/material'
+import { blueGrey, grey, indigo, red } from '@mui/material/colors'
 
 export const Theme = createTheme({
   palette: {
@@ -8,16 +8,16 @@ export const Theme = createTheme({
       paper: grey[900],
     },
     primary: {
-      main: red[800],
-      dark: red[900],
-      light: red[700],
+      main: red[500],
+      dark: red[600],
+      light: red[400],
       contrastText: blueGrey[50],
     },
     secondary: {
-      main: indigo[800],
-      dark: indigo[900],
-      light: indigo[700],
-      contrastText: blueGrey[50],
+      main: blueGrey[100],
+      dark: blueGrey[200],
+      light: blueGrey[50],
+      contrastText: grey[900],
     },
   },
   typography: {

@@ -1,27 +1,21 @@
+import { Grid, Typography } from '@mui/material'
 import type { NextPage } from 'next'
-import { Grid, makeStyles, Typography } from '@material-ui/core'
-
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-})
 
 const Home: NextPage = () => {
-  const classes = useStyles()
-
   return (
     <>
       <Grid
         container
-        className={classes.root}
+        sx={{
+          width: '100%',
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
         spacing={0}
         alignItems="center"
-        justify="center"
+        justifyContent="center"
       >
         <Grid item>
           <Typography>Hello World!</Typography>
