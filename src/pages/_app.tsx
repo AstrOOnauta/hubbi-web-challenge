@@ -1,6 +1,7 @@
 import { CssBaseline, ThemeProvider } from '@material-ui/core'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import Background from '../components/Background'
 import { Theme } from '../shared/themes'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -12,6 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CssBaseline />
+      <Background />
       <Component {...pageProps} />
     </ThemeProvider>
   )
