@@ -54,7 +54,7 @@ export default function Header() {
           mobile
             ? { width: '160px' }
             : tablet
-            ? { width: '160px', marginLeft: '8rem' }
+            ? { width: '160px', marginLeft: '2rem' }
             : { width: '160px', marginLeft: '15rem' }
         }
         src="/logo.png"

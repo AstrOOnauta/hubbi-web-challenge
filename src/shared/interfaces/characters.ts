@@ -14,4 +14,5 @@ export interface CharacterResponse {
   starships: string[]
   url: string
   vehicles: string[]
+  gender?: string[]
 }
