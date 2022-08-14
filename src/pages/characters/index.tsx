@@ -124,15 +124,7 @@ export default function Characters() {
           }}
         >
           {filteredCharacters.map((character, index) => {
-            let id = '0'
-
-            if (index < 10) {
-              id = character.url.slice(-2, -1)
-            } else if (index < 100) {
-              id = character.url.slice(-3, -1)
-            } else {
-              id = character.url.slice(-4, -1)
-            }
+            const id = character.url.replace(/[^0-9]/g, '')
 
             return (
               <NextLink href={`/characters/${id}`} passHref key={index}>

@@ -120,15 +120,7 @@ export default function Starships() {
           }}
         >
           {filteredStarships.map((starship, index) => {
-            let id = '0'
-
-            if (index < 10) {
-              id = starship.url.slice(-2, -1)
-            } else if (index < 100) {
-              id = starship.url.slice(-3, -1)
-            } else {
-              id = starship.url.slice(-4, -1)
-            }
+            const id = starship.url.replace(/[^0-9]/g, '')
 
             return (
               <NextLink href={`/starships/${id}`} passHref key={index}>
@@ -165,7 +157,7 @@ export default function Starships() {
               width: '100%',
             }}
           >
-            {page > 9 ? (
+            {page > 4 ? (
               ''
             ) : isLoading ? (
               <CircularProgress />
