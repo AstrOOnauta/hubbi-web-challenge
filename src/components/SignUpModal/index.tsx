@@ -10,30 +10,37 @@ import {
 } from '@mui/material'
 import { Box } from '@mui/system'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import GppGoodIcon from '@mui/icons-material/GppGood'
-import PersonIcon from '@mui/icons-material/Person'
 import { useContext, useRef, useState } from 'react'
 
-import OpenLoginContext from '../../shared/context/openLogin'
-import { blueGrey, red } from '@mui/material/colors'
 import OpenSignUpContext from '../../shared/context/openSignUp'
+import { blueGrey, red } from '@mui/material/colors'
+import OpenLoginContext from '../../shared/context/openLogin'
 
-export default function LoginModal() {
+export default function SignUpModal() {
+  const { openSignUp, setOpenSignUp } = useContext(OpenSignUpContext)
   const { openLogin, setOpenLogin } = useContext(OpenLoginContext)
-  const { setOpenSignUp } = useContext(OpenSignUpContext)
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
-  const userInputRef = useRef<HTMLInputElement>(null)
+  const nameInputRef = useRef<HTMLInputElement>(null)
+  const emailInputRef = useRef<HTMLInputElement>(null)
+  const usernameInputRef = useRef<HTMLInputElement>(null)
   const passwordInputRef = useRef<HTMLInputElement>(null)
+  const confirmPasswordInputRef = useRef<HTMLInputElement>(null)
 
-  const handleClose = () => setOpenLogin(false)
+  const handleClose = () => setOpenSignUp(false)
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault()
 
-    if (userInputRef.current && passwordInputRef.current) {
-      console.log(userInputRef.current.value)
+    if (
+      nameInputRef.current &&
+      emailInputRef.current &&
+      usernameInputRef.current &&
+      passwordInputRef.current &&
+      confirmPasswordInputRef.current
+    ) {
+      console.log(usernameInputRef.current.value)
       console.log(passwordInputRef.current.value)
     }
   }
@@ -49,7 +56,7 @@ export default function LoginModal() {
   }
   return (
     <Modal
-      open={openLogin}
+      open={openSignUp}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -86,7 +93,7 @@ export default function LoginModal() {
             margin: '2rem 0 1rem 0',
           }}
         >
-          SIGN IN
+          SIGN UP
         </Typography>
         <Box component="form" onSubmit={onSubmit}>
           <InputBase
@@ -97,15 +104,36 @@ export default function LoginModal() {
               color: blueGrey[50],
               borderBottom: '2px solid #FFFFFF',
             }}
-            placeholder="Username or Email"
+            placeholder="Name"
             type="text"
             name="username"
-            inputRef={userInputRef}
-            startAdornment={
-              <InputAdornment position="start" sx={{ color: blueGrey[50] }}>
-                <PersonIcon />
-              </InputAdornment>
-            }
+            inputRef={nameInputRef}
+          />
+          <InputBase
+            required
+            sx={{
+              width: '100%',
+              marginBottom: '1rem',
+              color: blueGrey[50],
+              borderBottom: '2px solid #FFFFFF',
+            }}
+            placeholder="Email"
+            type="text"
+            name="username"
+            inputRef={emailInputRef}
+          />
+          <InputBase
+            required
+            sx={{
+              width: '100%',
+              marginBottom: '1rem',
+              color: blueGrey[50],
+              borderBottom: '2px solid #FFFFFF',
+            }}
+            placeholder="Username"
+            type="text"
+            name="username"
+            inputRef={usernameInputRef}
           />
           <InputBase
             required
@@ -131,9 +159,29 @@ export default function LoginModal() {
                 </IconButton>
               </InputAdornment>
             }
-            startAdornment={
-              <InputAdornment position="start" sx={{ color: blueGrey[50] }}>
-                <GppGoodIcon />
+          />
+          <InputBase
+            required
+            sx={{
+              width: '100%',
+              marginBottom: '2rem',
+              color: blueGrey[50],
+              borderBottom: '2px solid #FFFFFF',
+            }}
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Confirm password"
+            inputRef={confirmPasswordInputRef}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                  sx={{ color: blueGrey[50], marginRight: '-0.4rem' }}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
               </InputAdornment>
             }
           />
@@ -144,29 +192,17 @@ export default function LoginModal() {
             }}
             variant="contained"
           >
-            Sign In
-          </Button>
-        </Box>
-        <Box
-          sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}
-          justifyContent="flex-end"
-        >
-          <Button
-            sx={{
-              fontSize: '.6rem',
-            }}
-          >
-            Forgot your password?
+            Sign Up
           </Button>
         </Box>
         <Button
           sx={{ marginTop: '1rem' }}
           onClick={() => {
-            setOpenSignUp(true)
-            setOpenLogin(false)
+            setOpenSignUp(false)
+            setOpenLogin(true)
           }}
         >
-          Create an Account
+          I Have an Account
         </Button>
       </Box>
     </Modal>
