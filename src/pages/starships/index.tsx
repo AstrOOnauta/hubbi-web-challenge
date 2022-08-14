@@ -4,18 +4,15 @@ import {
   Button,
   CircularProgress,
   Grid,
-  IconButton,
-  InputBase,
-  Paper,
   Typography,
   useMediaQuery,
 } from '@mui/material'
 import NextLink from 'next/link'
 import { grey, red } from '@mui/material/colors'
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 
 import { StarshipResponse } from '../../shared/interfaces/starships'
 import { apiClient } from '../../shared/services/api'
+import Search from '../../components/Search'
 
 export default function Starships() {
   const [starships, setStarships] = useState<StarshipResponse[]>([])
@@ -84,30 +81,7 @@ export default function Starships() {
           marginBottom: '1rem',
         }}
       >
-        <Paper
-          component="form"
-          sx={{
-            p: '2px 4px',
-            display: 'flex',
-            alignItems: 'center',
-            width: 400,
-            background: 'rgba( 0, 0, 0, 0.6 )',
-          }}
-          onSubmit={search}
-        >
-          <InputBase
-            sx={{ ml: 1, flex: 1, color: grey[50] }}
-            placeholder="Search a Starship"
-            inputRef={inputSearchRef}
-          />
-          <IconButton
-            type="submit"
-            sx={{ p: '10px', color: red[600] }}
-            aria-label="search"
-          >
-            <SearchOutlinedIcon />
-          </IconButton>
-        </Paper>
+        <Search search={search} inputSearchRef={inputSearchRef} />
       </Box>
       {isLoading && filteredStarships.length === 0 ? (
         <Grid
