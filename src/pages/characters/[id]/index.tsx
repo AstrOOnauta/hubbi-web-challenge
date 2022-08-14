@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react'
 import { CharacterResponse } from '../../../shared/interfaces/characters'
 import { apiClient } from '../../../shared/services/api'
 
-export default function Character() {
+export default function CharacterDetails() {
   const [character, setCharacter] = useState<CharacterResponse | undefined>(
     undefined
   )
