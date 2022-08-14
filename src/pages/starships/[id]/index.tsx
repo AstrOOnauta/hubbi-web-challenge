@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   CircularProgress,
   Grid,
@@ -6,11 +7,12 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import { red } from '@mui/material/colors'
+import { grey, red } from '@mui/material/colors'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { StarshipResponse } from '../../../shared/interfaces/starships'
 import { apiClient } from '../../../shared/services/api'
+import { stringAvatar } from '../../../shared/utils/stringAvatar'
 
 export default function StarshipDetails() {
   const [starship, setStarship] = useState<StarshipResponse | undefined>(
@@ -66,23 +68,46 @@ export default function StarshipDetails() {
       <Box
         sx={{
           width: '100%',
+          minHeight: '100vh',
           padding: mobile
-            ? '7.5rem 2rem 1rem 2rem'
+            ? '8rem 2rem 0 2rem'
             : tablet
-            ? '7.5rem 4rem 1rem 4rem'
-            : '7.5rem 17.5rem 1rem 17.5rem',
+            ? '0 4rem'
+            : '0 17.5rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
+        alignItems="center"
       >
         <Paper
           sx={{
+            position: 'relative',
             width: '100%',
-            height: '100%',
             padding: '2rem',
             background: 'rgba( 0, 0, 0, 0.6 )',
             boxShadow: '0 0 32px 8px rgba( 0, 0, 0, 0.37 )',
             borderBottom: '2px solid rgba( 198, 40, 40, 0.5 )',
           }}
         >
+          {starship && !mobile ? (
+            <Avatar
+              {...stringAvatar(starship?.name)}
+              sx={{
+                width: 200,
+                height: 200,
+                position: 'absolute',
+                top: -100,
+                right: 100,
+                fontSize: '5rem',
+                bgcolor: red[400],
+                color: grey[50],
+              }}
+            />
+          ) : (
+            ''
+          )}
+
           <Grid container direction="column">
             <Grid item xs={20}>
               <Typography
