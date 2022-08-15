@@ -1,12 +1,16 @@
 import { CssBaseline } from '@mui/material'
 import type { AppProps } from 'next/app'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 
 import 'react-toastify/dist/ReactToastify.css'
 
 import Background from '../components/Background'
-import Header from '../components/Header'
 import GlobalContext from '../shared/context'
+
+const Header = dynamic(() => import('../components/Header'), {
+  ssr: false,
+})
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

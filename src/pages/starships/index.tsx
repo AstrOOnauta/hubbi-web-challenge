@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import {
   Avatar,
   Box,
@@ -15,8 +15,13 @@ import { StarshipResponse } from '../../shared/interfaces/starships'
 import { apiClient } from '../../shared/services/api'
 import Search from '../../components/Search'
 import { stringAvatar } from '../../shared/utils/stringAvatar'
+import LoginContext from '../../shared/context/login'
+import OpenLoginContext from '../../shared/context/openLogin'
 
 export default function Starships() {
+  const { setOpenLogin } = useContext(OpenLoginContext)
+  const { login } = useContext(LoginContext)
+
   const [starships, setStarships] = useState<StarshipResponse[]>([])
   const [filteredStarships, setFilteredStarships] = useState<
     StarshipResponse[]
@@ -142,7 +147,11 @@ export default function Starships() {
             const id = starship.url.replace(/[^0-9]/g, '')
 
             return (
-              <NextLink href={`/starships/${id}`} passHref key={index}>
+              <NextLink
+                href={login.hasLogin ? `/starships/${id}` : ''}
+                passHref
+                key={index}
+              >
                 <Grid
                   item
                   sx={{
@@ -162,6 +171,7 @@ export default function Starships() {
                   }}
                   alignItems="center"
                   justifyContent="flex-start"
+                  onClick={() => (login.hasLogin ? '' : setOpenLogin(true))}
                 >
                   <Avatar {...stringAvatar(starship.name)} />
                   <Typography>{starship.name}</Typography>

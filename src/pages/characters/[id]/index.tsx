@@ -9,12 +9,15 @@ import {
 } from '@mui/material'
 import { grey, red } from '@mui/material/colors'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import LoginContext from '../../../shared/context/login'
 import { CharacterResponse } from '../../../shared/interfaces/characters'
 import { apiClient } from '../../../shared/services/api'
 import { stringAvatar } from '../../../shared/utils/stringAvatar'
 
 export default function CharacterDetails() {
+  const { login } = useContext(LoginContext)
+
   const [character, setCharacter] = useState<CharacterResponse | undefined>(
     undefined
   )
@@ -40,7 +43,11 @@ export default function CharacterDetails() {
   }
 
   useEffect(() => {
-    fetchCharacterData()
+    if (!login || !login.hasLogin) {
+      route.push('/')
+    } else {
+      fetchCharacterData()
+    }
   }, [id])
 
   if (isLoading) {

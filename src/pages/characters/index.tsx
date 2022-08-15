@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import {
   Avatar,
   Box,
@@ -15,8 +15,13 @@ import { CharacterResponse } from '../../shared/interfaces/characters'
 import { apiClient } from '../../shared/services/api'
 import Search from '../../components/Search'
 import { stringAvatar } from '../../shared/utils/stringAvatar'
+import LoginContext from '../../shared/context/login'
+import OpenLoginContext from '../../shared/context/openLogin'
 
 export default function Characters() {
+  const { setOpenLogin } = useContext(OpenLoginContext)
+  const { login } = useContext(LoginContext)
+
   const [characters, setCharacters] = useState<CharacterResponse[]>([])
   const [filteredCharacters, setFilteresCharacters] = useState<
     CharacterResponse[]
@@ -146,7 +151,11 @@ export default function Characters() {
             const id = character.url.replace(/[^0-9]/g, '')
 
             return (
-              <NextLink href={`/characters/${id}`} passHref key={index}>
+              <NextLink
+                href={login.hasLogin ? `/characters/${id}` : ''}
+                passHref
+                key={index}
+              >
                 <Grid
                   item
                   sx={{
@@ -166,6 +175,7 @@ export default function Characters() {
                   }}
                   alignItems="center"
                   justifyContent="flex-start"
+                  onClick={() => (login.hasLogin ? '' : setOpenLogin(true))}
                 >
                   <Avatar {...stringAvatar(character.name)} />
                   <Typography>{character.name}</Typography>

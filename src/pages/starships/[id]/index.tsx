@@ -9,12 +9,16 @@ import {
 } from '@mui/material'
 import { grey, red } from '@mui/material/colors'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import LoginContext from '../../../shared/context/login'
+
 import { StarshipResponse } from '../../../shared/interfaces/starships'
 import { apiClient } from '../../../shared/services/api'
 import { stringAvatar } from '../../../shared/utils/stringAvatar'
 
 export default function StarshipDetails() {
+  const { login } = useContext(LoginContext)
+
   const [starship, setStarship] = useState<StarshipResponse | undefined>(
     undefined
   )
@@ -40,10 +44,12 @@ export default function StarshipDetails() {
   }
 
   useEffect(() => {
-    fetchStarshipData()
+    if (!login || !login.hasLogin) {
+      route.push('/')
+    } else {
+      fetchStarshipData()
+    }
   }, [id])
-
-  console.log(starship)
 
   if (isLoading) {
     return (
