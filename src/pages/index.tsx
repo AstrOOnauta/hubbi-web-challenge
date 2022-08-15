@@ -6,6 +6,7 @@ import type { NextPage } from 'next'
 import CardsSection from '../components/CardsSection'
 
 import { Carousel } from '../components/Carousel'
+import Footer from '../components/Footer'
 
 const Home: NextPage = () => {
   const mobile = useMediaQuery('(max-width:720px)')
@@ -42,6 +43,7 @@ const Home: NextPage = () => {
         <Carousel />
       </Box>
       <CardsSection />
+      <Footer />
     </Grid>
   )
 }

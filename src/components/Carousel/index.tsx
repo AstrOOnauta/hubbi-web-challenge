@@ -39,7 +39,7 @@ export const Carousel = () => {
         alt="Banner"
         style={{
           width: '100%',
-          height: mobile ? '30vh' : tablet ? '50vh' : '100vh',
+          height: mobile ? '30vh' : tablet ? '50vh' : '94vh',
           backgroundSize: 'contain',
         }}
       />

@@ -60,7 +60,7 @@ export default function CardsSection() {
       />
       <Box
         sx={{
-          padding: mobile ? '0 1rem' : tablet ? '0 2rem' : '0 4rem',
+          padding: mobile ? '0 1rem' : tablet ? '0 2rem' : '2rem 4rem',
           minHeight: mobile ? '100%' : tablet ? '75vh' : '100%',
           display: 'flex',
           alignItems: 'center',
