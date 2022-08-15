@@ -16,7 +16,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import OpenSignUpContext from '../../shared/context/openSignUp'
 import { blueGrey, red } from '@mui/material/colors'
 import OpenLoginContext from '../../shared/context/openLogin'
-import UsersContext, { UsersContextProvider } from '../../shared/context/users'
+import UsersContext from '../../shared/context/users'
 
 export default function SignUpModal() {
   const { openSignUp, setOpenSignUp } = useContext(OpenSignUpContext)
