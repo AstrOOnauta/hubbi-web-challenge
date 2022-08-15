@@ -1,18 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Box, Button, Drawer, Grid, Paper, useMediaQuery } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 import { useRouter } from 'next/router'
+import NextLink from 'next/link'
 
 import LoginButton from './LoginButton'
 import SignUpButton from './SignUpButton'
-import NextLink from 'next/link'
 import { OpenLoginContextProvider } from '../../shared/context/openLogin'
 import LoginModal from '../LoginModal'
 import SignUpModal from '../SignUpModal'
 import { OpenSignUpContextProvider } from '../../shared/context/openSignUp'
 import { UsersContextProvider } from '../../shared/context/users'
+import LoginContext from '../../shared/context/login'
+import LogoutButton from './LogoutButton'
+import UserBadge from './UserBadge'
 
 const NAV_BAR = [
   {
@@ -30,6 +33,8 @@ const NAV_BAR = [
 ]
 
 export default function Header() {
+  const { login } = useContext(LoginContext)
+
   const [openDrawer, setOpenDrawer] = useState(false)
 
   const mobile = useMediaQuery('(max-width:720px)')
@@ -131,8 +136,25 @@ export default function Header() {
                           </Grid>
                         )
                       })}
-                      <LoginButton setOpenDrawer={setOpenDrawer} />
-                      <SignUpButton setOpenDrawer={setOpenDrawer} />
+                      {login.hasLogin ? (
+                        <Box
+                          sx={{
+                            marginTop: '4rem',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <UserBadge login={login} />
+                          <Box sx={{ marginTop: '1rem' }} />
+                          <LogoutButton />
+                        </Box>
+                      ) : (
+                        <>
+                          <LoginButton setOpenDrawer={setOpenDrawer} />
+                          <SignUpButton setOpenDrawer={setOpenDrawer} />
+                        </>
+                      )}
                     </Grid>
                   </Box>
                 </Drawer>
@@ -182,8 +204,17 @@ export default function Header() {
                   alignItems="center"
                   sx={{ marginRight: '2rem' }}
                 >
-                  <LoginButton setOpenDrawer={setOpenDrawer} />
-                  <SignUpButton setOpenDrawer={setOpenDrawer} />
+                  {login.hasLogin ? (
+                    <>
+                      <UserBadge login={login} />
+                      <LogoutButton />
+                    </>
+                  ) : (
+                    <>
+                      <LoginButton setOpenDrawer={setOpenDrawer} />
+                      <SignUpButton setOpenDrawer={setOpenDrawer} />
+                    </>
+                  )}
                 </Grid>
               </>
             )}

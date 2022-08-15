@@ -13,15 +13,19 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import GppGoodIcon from '@mui/icons-material/GppGood'
 import PersonIcon from '@mui/icons-material/Person'
 import { useContext, useRef, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
 
 import OpenLoginContext from '../../shared/context/openLogin'
 import { blueGrey, red } from '@mui/material/colors'
 import OpenSignUpContext from '../../shared/context/openSignUp'
-import { UsersContextProvider } from '../../shared/context/users'
+import UsersContext from '../../shared/context/users'
+import LoginContext from '../../shared/context/login'
 
 export default function LoginModal() {
   const { openLogin, setOpenLogin } = useContext(OpenLoginContext)
   const { setOpenSignUp } = useContext(OpenSignUpContext)
+  const { users } = useContext(UsersContext)
+  const { setLogin } = useContext(LoginContext)
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
@@ -34,8 +38,32 @@ export default function LoginModal() {
     e.preventDefault()
 
     if (userInputRef.current && passwordInputRef.current) {
-      console.log(userInputRef.current.value)
-      console.log(passwordInputRef.current.value)
+      const user = users.find((user) => {
+        return (
+          (user.username === userInputRef.current?.value ||
+            user.email === userInputRef.current?.value) &&
+          user.password === passwordInputRef.current?.value
+        )
+      })
+
+      if (!user) {
+        toast.error('Credentials don`t match!', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        })
+      } else {
+        setLogin({
+          username: user.username,
+          hasLogin: true,
+        })
+
+        toast.success('User logged!', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        })
+
+        setOpenLogin(false)
+      }
     }
   }
 
@@ -49,7 +77,7 @@ export default function LoginModal() {
     event.preventDefault()
   }
   return (
-    <UsersContextProvider>
+    <>
       <Modal
         open={openLogin}
         onClose={handleClose}
@@ -172,6 +200,7 @@ export default function LoginModal() {
           </Button>
         </Box>
       </Modal>
-    </UsersContextProvider>
+      <ToastContainer limit={3} />
+    </>
   )
 }
