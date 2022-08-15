@@ -1,10 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
+import { useMediaQuery } from '@mui/material'
 import React from 'react'
 import AliceCarousel from 'react-alice-carousel'
 import 'react-alice-carousel/lib/alice-carousel.css'
-
-const handleDragStart = (e: React.DragEvent<HTMLDivElement>) =>
-  e.preventDefault()
 
 const STARWARS_BANNERS = [
   {
@@ -24,20 +22,29 @@ const STARWARS_BANNERS = [
   },
 ]
 
-const items = STARWARS_BANNERS.map((banner, index) => {
-  return (
-    <img
-      key={index}
-      src={banner.path}
-      onDragStart={handleDragStart}
-      role="presentation"
-      alt="Banner"
-      style={{ width: '100%', height: '94vh', backgroundSize: 'cover' }}
-    />
-  )
-})
-
 export const Carousel = () => {
+  const mobile = useMediaQuery('(max-width:720px)')
+  const tablet = useMediaQuery('(max-width:1279px)')
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) =>
+    e.preventDefault()
+
+  const items = STARWARS_BANNERS.map((banner, index) => {
+    return (
+      <img
+        key={index}
+        src={banner.path}
+        onDragStart={handleDragStart}
+        role="presentation"
+        alt="Banner"
+        style={{
+          width: '100%',
+          height: mobile ? '30vh' : tablet ? '50vh' : '100vh',
+          backgroundSize: 'contain',
+        }}
+      />
+    )
+  })
   return (
     <AliceCarousel
       autoPlayInterval={3000}
