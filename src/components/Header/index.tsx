@@ -59,6 +59,7 @@ export default function Header() {
           background: 'rgba( 0, 0, 0, 0.6 )',
           boxShadow: '0 0 32px 8px rgba( 0, 0, 0, 0.37 )',
           borderBottom: '2px solid rgba( 198, 40, 40, 0.5 )',
+          zIndex: 1,
         }}
       >
         <img
